@@ -1,19 +1,21 @@
-    #ifndef ROW_H
-    #define ROW_H
+#ifndef ROW_H
+#define ROW_H
 
-    #include <string>
+#include "globals.h"
+#include <iostream>
+#include <fstream>
+#include <algorithm>
+#include <filesystem>
 
-    class Globals; 
+class Row {
+public:
+    static void addRowView();
+    static void deleteRowView();
 
-    class Row {
-    public:
-        Row(Globals* globalsInstance);
-        void addRowView();
-        void addRow(const std::string& tableName, const std::string& columnName, const std::string& columnType);
-        bool isValidColumnType(const std::string& columnType);
+private:
+    static void addRow(const std::string& tableName, const std::string& columnName, const std::string& columnType);
+    static void deleteRow(const std::string& tableName, const std::string& columnName);
+    static bool isValidColumnType(const std::string& columnType);
+};
 
-    private:
-        Globals* globalsInstance; // Pointer to Globals instance
-    };
-
-    #endif // ROW_H
+#endif // ROW_H

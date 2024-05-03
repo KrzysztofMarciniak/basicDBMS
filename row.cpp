@@ -1,18 +1,28 @@
 #include "row.h"
-#include "table.h"
+#include "globals.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-
-Row::Row(Table* tableInstance) : tableInstance(tableInstance) {}
+#include <filesystem>
 
 void Row::addRowView() {
-    if (!tableInstance->checkForDatabase()) {
+    
+    if (!Globals::getInstance()->isLoggedIn()) {
+        std::cerr << "Error: User not logged in." << std::endl;
         return;
     }
+    if (!Globals::getInstance()->checkForDatabase()) {
+        return;
+    }
+
     std::string tableName, columnName, columnType;
     std::cout << "Enter table name: ";
     std::cin >> tableName;
+
+    if (!Globals::getInstance()->checkForTable(tableName)) {
+        std::cerr << "Error: Table does not exist." << std::endl;
+        return;
+    }
 
     std::cout << "Enter column name: ";
     std::cin >> columnName;
@@ -30,14 +40,9 @@ void Row::addRowView() {
 }
 
 void Row::addRow(const std::string& tableName, const std::string& columnName, const std::string& columnType) {
-    if (!tableInstance->isValidTableName(tableName)) {
-        std::cerr << "Error: Invalid table name." << std::endl;
-        return;
-    }
-
-    std::string fileName = tableName + "/" + columnName + ".row." + columnType + ".bdbms";
+    std::string tablePath = Globals::getInstance()->getTablePath(tableName);
+    std::string fileName = tablePath + columnName + ".row." + columnType + ".bdbms";
     std::ofstream outFile(fileName);
-
     if (outFile.is_open()) {
         std::cout << "Row file '" << fileName << "' created successfully." << std::endl;
         outFile.close();
@@ -48,4 +53,45 @@ void Row::addRow(const std::string& tableName, const std::string& columnName, co
 
 bool Row::isValidColumnType(const std::string& columnType) {
     return (columnType == "TEXT" || columnType == "BOOLEAN" || columnType == "INT");
+}
+
+void Row::deleteRowView() {
+    
+    if (!Globals::getInstance()->isLoggedIn()) {
+        std::cerr << "Error: User not logged in." << std::endl;
+        return;
+    }
+    if (!Globals::getInstance()->checkForDatabase()) {
+        return;
+    }
+
+    std::string tableName, columnName;
+    std::cout << "Enter table name: ";
+    std::cin >> tableName;
+
+    if (!Globals::getInstance()->checkForTable(tableName)) {
+        std::cerr << "Error: Table does not exist." << std::endl;
+        return;
+    }
+
+    std::cout << "Enter column name: ";
+    std::cin >> columnName;
+
+    deleteRow(tableName, columnName);
+}
+
+void Row::deleteRow(const std::string& tableName, const std::string& columnName) {
+    std::string tablePath = Globals::getInstance()->getTablePath(tableName);
+    std::filesystem::directory_iterator end_itr;
+    for (std::filesystem::directory_iterator itr(tablePath); itr != end_itr; ++itr) {
+        if (itr->is_regular_file() && itr->path().filename().string().find(columnName) == 0) {
+            if (std::filesystem::remove(itr->path())) {
+                std::cout << "Row '" << itr->path().filename() << "' deleted successfully." << std::endl;
+            } else {
+                std::cerr << "Error: Unable to delete row '" << itr->path().filename() << "'." << std::endl;
+            }
+            return;
+        }
+    }
+    std::cerr << "Error: Row file not found." << std::endl;
 }

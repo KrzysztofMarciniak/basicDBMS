@@ -15,11 +15,13 @@ public:
     static Globals* getInstance();
     void setLoggedIn(bool status);
     bool isLoggedIn() const;
+    bool checkForDatabase();
     void setUsername(const std::string& username);
+    bool checkForTable(const std::string& tableName);
     std::string getUsername() const; 
     std::string getDatabasePath() const; 
-
-
+    std::string getTablePath(const std::string& tableName) const;
+    
 };
 
 #endif

@@ -6,7 +6,6 @@
 #include "help.h"
 #include "database.h"
 #include "table.h"
-#include "records.h"
 #include "row.h"
 
 void registerCommands(Interface& interface) {
@@ -27,10 +26,8 @@ void registerCommands(Interface& interface) {
     interface.registerCommand("createTable", Table::createTableView); 
     interface.registerCommand("deleteTable", Table::deleteTableView); 
     interface.registerCommand("lst", Table::listTables); 
-    interface.registerCommand("addRecord", Records::addRecordView); 
-    interface.registerCommand("lsr",Records::printTableView);
-    interface.registerCommand("addRow",Row::addRowView);
-    
+    interface.registerCommand("addRow", Row::addRowView);
+    interface.registerCommand("deleteRow", Row::deleteRowView);
 }
 
 #endif

@@ -16,9 +16,10 @@ void Table::listTables() {
         return;
     }   
 
-    if (!checkForDatabase()) {
-        return;
-    }
+if (!Globals::getInstance()->checkForDatabase()) {
+    return;
+}
+
 
     std::string databasePath = Globals::getInstance()->getDatabasePath();
     printExistingTables(databasePath); 
@@ -39,26 +40,15 @@ void Table::createTable(const std::string& tableName) {
 }
 
 
-
-bool Table::checkForDatabase() {
-    std::string databasePath = Globals::getInstance()->getDatabasePath();
-    struct stat info;
-    if (stat(databasePath.c_str(), &info) != 0 || !(info.st_mode & S_IFDIR)) {
-        std::cout << "Error: Database folder does not exist." << std::endl;
-        return false;
-    }
-    return true;
-}
-
 void Table::createTableView() {
     if (!Globals::getInstance()->isLoggedIn()) {
         std::cout << "Error: User not logged in." << std::endl;
         return;
     }
+if (!Globals::getInstance()->checkForDatabase()) {
+    return;
+}
 
-    if (!checkForDatabase()) {
-        return;
-    }
 
     std::string tableName;
     std::cout << "Enter table name: ";
@@ -79,15 +69,6 @@ void Table::printExistingTables(const std::string& databasePath) {
 
 
 void Table::deleteTable(const std::string& tableName) {
-    if (!Globals::getInstance()->isLoggedIn()) {
-        std::cout << "Error: User not logged in." << std::endl;
-        return;
-    }
-
-    if (!checkForDatabase()) {
-        return;
-    }
-
     std::string databasePath = Globals::getInstance()->getDatabasePath();    
     printExistingTables(databasePath); 
 
@@ -106,7 +87,7 @@ void Table::deleteTableView() {
         return;
     }
 
-    if (!checkForDatabase()) {
+    if (!Globals::getInstance()->checkForDatabase()) {
         return;
     }
 
