@@ -1,0 +1,57 @@
+[Wed May  1 11:48:12 2024] user1 logged in
+[Wed May  1 11:53:39 2024] tried to check their own username.
+[Wed May  1 11:53:44 2024] user1 logged in
+[Wed May  1 11:53:46 2024] user1 checked their own username.
+[Wed May  1 11:55:00 2024] Logged out.
+[Wed May  1 11:55:15 2024] user1 logged in
+[Wed May  1 11:55:16 2024] user1Logged out.
+[Wed May  1 11:55:18 2024] Someone tried to check their own username.
+[Wed May  1 11:56:40 2024] Someone tried to check their own username.
+[Wed May  1 11:56:41 2024] Someone tried to logout while not being logged in.
+[Wed May  1 11:56:53 2024] user1 logged in
+[Wed May  1 11:56:55 2024] user1 Logged out.
+[Wed May  1 12:03:31 2024] User 'user2' created successfully.
+[Wed May  1 16:13:14 2024] user1 logged in
+[Wed May  1 18:42:35 2024] user failed to login in
+[Wed May  1 18:42:42 2024] user1 logged in
+[Wed May  1 18:49:16 2024] user1 logged in
+[Wed May  1 18:49:42 2024] user2 logged in
+[Wed May  1 18:55:15 2024] user1 logged in
+[Wed May  1 19:01:33 2024] user failed to login in
+[Wed May  1 19:01:36 2024] user2 logged in
+[Wed May  1 19:41:18 2024] user1 logged in
+[Wed May  1 19:42:31 2024] user1 logged in
+[Wed May  1 19:44:02 2024] user1 logged in
+[Wed May  1 20:55:10 2024] user1 logged in
+[Wed May  1 21:02:26 2024] user1 logged in
+[Wed May  1 21:49:53 2024] user1 logged in
+[Thu May  2 11:41:51 2024] user1 logged in
+[Thu May  2 11:46:12 2024] user1 logged in
+[Thu May  2 12:19:00 2024] user1 logged in
+[Thu May  2 12:20:43 2024] user1 logged in
+[Thu May  2 12:21:15 2024] user1 logged in
+[Thu May  2 12:29:15 2024] user1 logged in
+[Thu May  2 12:39:28 2024] user1 logged in
+[Thu May  2 12:54:53 2024] user1 logged in
+[Thu May  2 13:04:14 2024] user1 logged in
+[Thu May  2 13:05:11 2024] user1 logged in
+[Thu May  2 13:36:04 2024] user failed to login in
+[Thu May  2 13:36:09 2024] user1 logged in
+[Thu May  2 13:47:29 2024] user1 logged in
+[Thu May  2 13:55:50 2024] user1 logged in
+[Thu May  2 14:11:08 2024] user1 failed to login in
+[Thu May  2 14:11:12 2024] user failed to login in
+[Thu May  2 14:11:15 2024] user1 logged in
+[Thu May  2 15:21:22 2024] user2 logged in
+[Thu May  2 15:40:03 2024] User 'user3' created successfully.
+[Thu May  2 16:01:11 2024] user3 logged in
+[Thu May  2 16:11:14 2024] user1 logged in
+[Thu May  2 16:11:49 2024] user1 logged in
+[Thu May  2 16:14:38 2024] user1 logged in
+[Thu May  2 16:14:51 2024] user1 logged in
+[Thu May  2 16:24:20 2024] user1 logged in
+[Thu May  2 16:25:00 2024] user1 logged in
+[Thu May  2 16:27:30 2024] createTable failed to login in
+[Thu May  2 16:27:34 2024] user failed to login in
+[Thu May  2 16:27:38 2024] user1 logged in
+[Thu May  2 19:07:12 2024] user1 logged in
