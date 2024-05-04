@@ -17,11 +17,12 @@ public:
     bool isLoggedIn() const;
     bool checkForDatabase();
     void setUsername(const std::string& username);
+    bool checkForRow(const std::string& tableName, const std::string& columnName);
     bool checkForTable(const std::string& tableName);
     std::string getUsername() const; 
     std::string getDatabasePath() const; 
     std::string getTablePath(const std::string& tableName) const;
-    
+    std::string getRowPath(const std::string& tableName, const std::string& columnName) const;  
 };
 
 #endif
