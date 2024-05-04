@@ -108,3 +108,12 @@
 [Sat May  4 19:30:53 2024] User 'user4' created successfully.
 [Sat May  4 19:32:28 2024] user4 logged in
 [Sat May  4 19:32:31 2024] user4 checked their own username.
+[Sat May  4 19:45:38 2024] user1 logged in
+[Sat May  4 19:46:42 2024] user1 Logged out.
+[Sat May  4 19:55:18 2024] Someone tried to check their own username.
+[Sat May  4 19:55:28 2024] user1 logged in
+[Sat May  4 19:57:36 2024] user3 logged in
+[Sat May  4 20:06:22 2024] user1 logged in
+[Sat May  4 20:14:35 2024] user1 logged in
+[Sat May  4 20:40:28 2024] user1 logged in
+[Sat May  4 20:41:31 2024] user1 logged in

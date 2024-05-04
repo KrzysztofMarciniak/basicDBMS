@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <vector>
 
 void Record::create(const std::string& tableName, const std::string& columnName, const std::string& value) {
     std::string rowPath = Globals::getInstance()->getRowPath(tableName, columnName);
@@ -75,12 +76,54 @@ void Record::deleteView() {
 
 
 
+std::string Record::readRecordSelector(const std::string& tableName, const std::string& columnName) {
+    std::string rowPath = Globals::getInstance()->getRowPath(tableName, columnName);
+    std::ifstream inFile(rowPath);
+    if (!inFile.is_open()) {
+        std::cerr << "Error: Unable to open row file." << std::endl;
+        return "";
+    }
+
+    std::vector<std::string> lines;
+    std::string line;
+    int i = 1;
+    while (std::getline(inFile, line)) {
+        lines.push_back(line);
+        std::cout << i << ". " << line << std::endl;
+        i++;
+    }
+
+    inFile.close();
+
+    if (lines.empty()) {
+        std::cout << "No records found." << std::endl;
+        return "";
+    }
+
+    int selection;
+    while (true) {
+        std::cout << "Select record (1-" << lines.size() << "): ";
+        std::cin >> selection;
+        if (selection >= 1 && selection <= lines.size()) {
+            break;
+        }
+        std::cout << "Invalid selection, please try again." << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+
+    return lines[selection - 1]; 
+}
+
 
 void Record::deleteRecord(const std::string& tableName, const std::string& columnName) {
+    std::string selectedLine = readRecordSelector(tableName, columnName);
+    if (selectedLine.empty()) {
+        return;
+    }
+
     std::string rowPath = Globals::getInstance()->getRowPath(tableName, columnName);
     std::string tempPath = rowPath + ".tmp";
-
-    std::cout << "Row path: " << rowPath << std::endl; // Print rowPath for debugging
 
     std::ifstream inFile(rowPath);
     if (!inFile.is_open()) {
@@ -88,23 +131,15 @@ void Record::deleteRecord(const std::string& tableName, const std::string& colum
         return;
     }
 
-    std::string selectedLine = readRecordSelector(tableName, columnName);
-    if (selectedLine.empty()) {
-        std::cerr << "Error: Selected line is empty." << std::endl; // Print error message for debugging
-        return;
-    }
-
-    std::cout << "Selected line: " << selectedLine << std::endl; // Print selectedLine for debugging
-
     std::ofstream outFile(tempPath);
     if (!outFile.is_open()) {
         std::cerr << "Error: Unable to open temp file." << std::endl;
+        inFile.close();
         return;
     }
 
     std::string line;
     while (std::getline(inFile, line)) {
-        std::cout << "Reading line: " << line << std::endl; // Print each line for debugging
         if (line != selectedLine) {
             outFile << line << std::endl;
         }
@@ -126,69 +161,54 @@ void Record::deleteRecord(const std::string& tableName, const std::string& colum
     std::cout << "Record deleted successfully." << std::endl;
 }
 
+std::vector<std::string> Record::readRecords(const std::string& tableName, const std::string& columnName) {
+    std::vector<std::string> records;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-std::string Record::readRecordSelector(const std::string& tableName, const std::string& columnName) {
     std::string rowPath = Globals::getInstance()->getRowPath(tableName, columnName);
     std::ifstream inFile(rowPath);
     if (!inFile.is_open()) {
         std::cerr << "Error: Unable to open row file." << std::endl;
-        return "";
+        return records;
     }
 
     std::string line;
-    std::string selectedLine;
-    int selection = 0;
-    int i = 1; // Start from 1
     while (std::getline(inFile, line)) {
-        if (i == selection) { // Compare against selection directly
-            selectedLine = line;
-        }
-        if (i > 10 && selection <= 10) {
-            std::cout << "..." << std::endl;
-            break;
-        }
-        std::cout << i << ". " << line << std::endl;
-        i++;
+        records.push_back(line);
     }
+
     inFile.close();
 
-    if (i == 1) { // Check if no records found
+    if (records.empty()) {
         std::cout << "No records found." << std::endl;
-        return "";
-    }
-
-    while (true) {
-        std::cout << "Select record (1-" << i - 1 << "):" << std::endl;
-        std::cin >> selection;
-        if (selection >= 1 && selection <= i - 1) { // Adjust upper bound
-            break;
+    } else {
+        std::cout << "Records:" << std::endl;
+        for (const auto& record : records) {
+            std::cout << record << std::endl;
         }
-        std::cout << "Invalid selection, please try again." << std::endl;
     }
 
-    return selectedLine;
+    return records;
 }
+void Record::readRecordsView() {
+    if (!Globals::getInstance()->checkForDatabase()) {
+        return;
+    }    
+    if (!Globals::getInstance()->isLoggedIn()) {
+        std::cerr << "Error: User not logged in." << std::endl;
+        return;
+    }
 
+    std::string tableName, columnName;
+    std::cout << "Enter table name: ";
+    std::cin >> tableName;
 
+    if (!Globals::getInstance()->checkForTable(tableName)) {
+        std::cerr << "Error: Table does not exist." << std::endl;
+        return;
+    }
 
-
-
-
-
+    std::cout << "Enter column name: ";
+    std::cin >> columnName;
+    
+    std::vector<std::string> records = Record::readRecords(tableName, columnName);
+}

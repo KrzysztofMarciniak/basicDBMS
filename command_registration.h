@@ -31,6 +31,7 @@ void registerCommands(Interface& interface) {
     interface.registerCommand("deleteRow", Row::deleteRowView);
     interface.registerCommand("createRecord", Record::createView);
     interface.registerCommand("deleteRecord", Record::deleteView);
+    interface.registerCommand("readRecord", Record::readRecordsView);
 }
 
 #endif
