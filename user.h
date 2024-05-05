@@ -22,7 +22,6 @@ public:
     static void logout();
     static void whoami();
     static void listAll();
-    std::string getHiddenInput();
 };
 
 #endif
