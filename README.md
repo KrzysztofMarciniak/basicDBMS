@@ -1,6 +1,8 @@
 # BasicDBMS 
 [Polska Wersja](https://github.com/KrzysztofMarciniak/basicDBMS/wiki/readmePL)
 
+![carbon](https://github.com/KrzysztofMarciniak/basicDBMS/assets/96542207/ec38acdb-0739-428c-a4df-3cf2753c51ec)
+
 BasicDBMS is a simple and minimalistic database management system written in C++ with an object-oriented approach. It allows users to create databases, tables, manage rows within those tables, and includes user authentication features. Check out [wiki](https://github.com/KrzysztofMarciniak/basicDBMS/wiki) for more information.
 
 ## Features:
